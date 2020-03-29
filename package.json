@@ -11,6 +11,7 @@
   "dependencies": {
     "config": "^3.3.1",
     "pkg": "^4.4.4",
+    "ssf": "^0.10.3",
     "xlsx": "^0.15.6"
   },
   "bin": "index.js"

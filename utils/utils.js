@@ -1,12 +1,27 @@
 const config = require('config');
+const SSF = require('ssf')
 const readFirstSheet = (fileName) => {
     // cellText:false (so the text isn't generated) and cellNF:false (so the date formats aren't generated), cellDates:true means get the date as a Date type
-    const workbook = XLSX.readFile(fileName, { type: 'binary', cellDates: true, cellNF: false, cellText: false });
+    const workbook = XLSX.readFile(fileName,);
+    // console.log(workbook)
     return { sheetName: workbook.SheetNames[0], content: workbook.Sheets[workbook.SheetNames[0]] }
 }
 
 const sheetToJson = (worksheet) => {
-    return XLSX.utils.sheet_to_json(worksheet, { raw: false, dateNF: "DD/MM/YYYY" })
+
+    // const result =  XLSX.utils.sheet_to_json(worksheet, { raw: false, dateNF: "DD/MM/YYYY" })
+    let result =  XLSX.utils.sheet_to_json(worksheet)
+    result = result.map(item=>{
+        const myDate  = (dateNum)=>{
+            ///it convert the date from excel number to object of month,day,year etc.
+            const objDate=SSF.parse_date_code(dateNum)
+            return `${objDate.d}/${objDate.m}/${objDate.y}`
+        }
+        item["תאריך"] = myDate(item["תאריך"])
+        return item;
+    })
+
+    return result
 }
 
 const createObjWithCustomerKey = (wsJson, chosenKey) => {

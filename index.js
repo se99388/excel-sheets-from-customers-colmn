@@ -7,7 +7,6 @@ const { createObjWithCustomerKey, readFirstSheet, sheetToJson, createWorkbook, a
 const COLUMN_TITLE = config.get('COLUMN_TITLE');
 const CREATED_FILE_NAME = `result-${new Date().toLocaleDateString()}.xlsx`
 const tempDIr = config.get('readCurrentDir');
-console.log(tempDIr)
 
 const executeProject = (tempDIr, filename) => {
     console.log("ads",tempDIr,filename)
